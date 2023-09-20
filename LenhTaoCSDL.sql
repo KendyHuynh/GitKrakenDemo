@@ -1,7 +1,7 @@
 ﻿-- Tạo cơ sở dữ liệu
 USE master;
 GO
-Drop database electronic_store
+--Drop database electronic_store
 CREATE DATABASE electronic_store;
 
 -- Sử dụng cơ sở dữ liệu mới tạo
