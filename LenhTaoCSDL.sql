@@ -13,7 +13,6 @@ CREATE TABLE categories (
     category_id INT PRIMARY KEY IDENTITY(1,1),
     category_name VARCHAR(255) NOT NULL
 );
-
 -- Bảng thông tin sản phẩm
 CREATE TABLE products (
     product_id INT PRIMARY KEY IDENTITY(1,1),
@@ -85,3 +84,26 @@ CREATE TABLE product_reviews (
     FOREIGN KEY (product_id) REFERENCES products(product_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+-- Bảng người bán hàng
+CREATE TABLE sellers (
+    seller_id INT PRIMARY KEY IDENTITY(1,1),
+    seller_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL
+);
+--Bảng thương hiệu sản phẩm 
+CREATE TABLE brands (
+    brand_id INT PRIMARY KEY IDENTITY(1,1),
+    brand_name VARCHAR(255) NOT NULL
+);
+-- Thêm cột Image và Color vào bảng products và liên kết brand
+ALTER TABLE products
+ADD	brand_id INT,
+	Image VARCHAR(255), -- Định dạng cho đường dẫn hình ảnh
+    Color VARCHAR(50),
+FOREIGN KEY (brand_id) REFERENCES brands(brand_id);
+
+-- Thêm cột địa chỉ giao hàng và liên kết seller
+ALTER TABLE orders
+ADD shipping_address VARCHAR(255) NOT NULL;
+
