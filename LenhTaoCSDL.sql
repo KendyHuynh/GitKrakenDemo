@@ -107,3 +107,4 @@ FOREIGN KEY (brand_id) REFERENCES brands(brand_id);
 ALTER TABLE orders
 ADD shipping_address VARCHAR(255) NOT NULL;
 
+
