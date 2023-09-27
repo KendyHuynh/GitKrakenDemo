@@ -19,6 +19,10 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"></script>
+
 </head>
 <body>
     <!-- Topbar Start -->
@@ -136,7 +140,7 @@
                             <a asp-controller="Product" asp-action="Index" class="nav-item nav-link">Sản phẩm</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a asp-area="Admin" asp-controller="Login" asp-action="Index" class="nav-item nav-link">Đăng nhập</a>
+                            <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-item nav-link">Đăng nhập</a>
                             <a href="" class="nav-item nav-link">Đăng ký</a>
                         </div>
                     </div>
