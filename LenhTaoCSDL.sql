@@ -93,7 +93,7 @@ CREATE TABLE sellers (
 --Bảng thương hiệu sản phẩm 
 CREATE TABLE brands (
     brand_id INT PRIMARY KEY IDENTITY(1,1),
-    brand_name NVARCHAR(255) NOT NULL
+    brand_name NVARCHAR(Max) NOT NULL
 );
 -- Thêm cột Image và Color vào bảng products và liên kết brand
 ALTER TABLE products
