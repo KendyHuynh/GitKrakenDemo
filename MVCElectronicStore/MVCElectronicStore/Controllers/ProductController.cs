@@ -11,13 +11,16 @@ namespace MVCElectronicStore.Controllers
     public class ProductController : Controller
     {
         DBHelper dbHelper;
+
         public ProductController(electronic_storeContext context)
         {
             dbHelper = new DBHelper(context);
         }
-
         public IActionResult Index()
         {
+            ViewData["lstProduct"] = dbHelper.GetProducts();
+            ViewData["LstBard"] = dbHelper.GetBrands();
+            ViewData["LstCategogy"] = dbHelper.GetCategories();
             return View();
         }
     }

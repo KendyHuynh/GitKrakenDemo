@@ -64,9 +64,9 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form action="">
+                <form asp-action="Index" method="get" asp-controller="Product">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm" name="name">
                         <div class="input-group-append">
                             <span class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
@@ -137,7 +137,7 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Trang chủ</a>
-                            <a asp-controller="Product" asp-action="Index" class="nav-item nav-link">Sản phẩm</a>
+                            <a asp-controller="Product" asp-action="Index" class="nav-item nav-link active">Sản phẩm</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-item nav-link">Đăng nhập</a>
@@ -268,6 +268,30 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <script>
+        function searchProducts() {
+            var searchTerm = document.getElementById("searchInput").value;
+
+            // Gửi yêu cầu tìm kiếm sản phẩm đến máy chủ (có thể dùng AJAX)
+
+            // Ví dụ sử dụng AJAX
+            $.ajax({
+                url: "/Product/Search", // Đặt URL của action xử lý tìm kiếm
+                type: "POST",
+                data: { searchTerm: searchTerm },
+                success: function (data) {
+                    // Xử lý dữ liệu trả về từ máy chủ, có thể cập nhật giao diện hiển thị sản phẩm tìm kiếm ở đây
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+            // Ngăn chặn form gửi lại trang
+            return false;
+        }
+    </script>
 </body>
 
 </html>

@@ -26,6 +26,7 @@ namespace MVCElectronicStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
             services.AddDbContext<electronic_storeContext>(options =>
            options.UseSqlServer(Configuration.GetConnectionString("ElectronicStoreDBContext")));
         }
@@ -58,6 +59,10 @@ namespace MVCElectronicStore
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "search",
+                    pattern: "Product/Search",
+                    defaults: new { controller = "Product", action = "Search" });
 
             });
         }

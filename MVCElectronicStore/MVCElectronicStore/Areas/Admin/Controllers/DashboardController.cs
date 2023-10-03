@@ -24,7 +24,9 @@ namespace MVCElectronicStore.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-        
+            ViewData["lstProduct"] = dbHelper.GetProducts();
+            ViewData["lstBard"] = dbHelper.GetBrands();
+            ViewData["lstCategogy"] = dbHelper.GetCategories();
             return View();
         }
         public IActionResult Detail(int ID)

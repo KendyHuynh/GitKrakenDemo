@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["Title"] = "Admin Products";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var lstProduct = ViewData["lstProduct"] as IEnumerable<Product>;
+    var lstBrand = ViewData["lstBrand"] as IEnumerable<Brand>;
+    var lstCategory = ViewData["lstCategory"] as IEnumerable<Category>;
 }
 
 <!-- Content Wrapper. Contains page content -->
@@ -66,22 +69,35 @@
                             }
                              Add more rows for other products
                         </tbody>*@
-                    <tbody>
+                <tbody>
+                    @if (lstProduct != null)
+                    {
+                        @for (var i = 0; i < lstProduct.Count(); i++)
+                        {
+                            var product = lstProduct.ElementAtOrDefault(i);
+                                <tr>
+                                    <td scope="row" width="100">@product.ProductId</td>
+                                    <td scope="row"  width="150" >@product.ProductName</td>
+                                    <td scope="row"><img src="~/images/@product.Image" alt="@product.Image" width="100"></td>
+                                    <td scope="row"  width="170" >@product.Description</td>
+                                    <td scope="row"  width="150" >@product.Category.CategoryName</td>
+                                    <td scope="row" width="100">@product.Brand.BrandName</td>
+                                    <td scope="row" width="150" >@product.Price</td>
+                                    <td>
+                                        <a class="btn btn-info" asp-area="Admin" asp-controller="Dashboard" asp-action="Detail" asp-route-ID="@product.ProductId">View Detail</a>
+                                        <a class="btn btn-warning" asp-area="Admin" asp-controller="Dashboard" asp-action="Edit" asp-route-ID="@product.ProductId">Edit</a>
+                                        <a class="btn btn-danger" asp-area="Admin" asp-controller="Dashboard" asp-action="Delete" asp-route-ID="@product.ProductId">Delete</a>
+                                    </td>
+                                </tr>
+                        } 
+                    }
+                    else
+                    {
                         <tr>
-                            <td scope="row">1</td>
-                            <td>Iphone 13 Pro</td>
-                            <td><img src="~/images/Iphone13.jpg" alt="Product Image" width="100"></td>
-                            <td>Sản phẩm mới 100%</td>
-                            <td>Điện thoại</td>
-                            <td>Apple</td>
-                            <td>13000000.00</td>
-                            <td>
-                                <a class="btn btn-info" asp-area="Admin" asp-controller="Dashboard" asp-action="Detail" >View Detail</a>
-                                <a class="btn btn-warning" asp-area="Admin" asp-controller="Dashboard" asp-action="Edit">Edit</a>
-                                <a class="btn btn-danger" asp-area="Admin" asp-controller="Dashboard" asp-action="Delete">Delete</a>
-                            </td>
+                            <td colspan="8">No products available.</td>
                         </tr>
-                    </tbody>
+                    }
+                </tbody>
 
                 </table>
             </div>

@@ -24,5 +24,9 @@ namespace MVCElectronicStore.Models
         {
             return _db.Brands.ToList();
         }
+        public IEnumerable<Product> SearchProducts(string searchTerm)
+        {
+            return _db.Products.Where(p => p.ProductName.Contains(searchTerm));
+        }
     }
 }

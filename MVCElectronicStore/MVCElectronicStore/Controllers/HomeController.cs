@@ -12,14 +12,16 @@ namespace MVCElectronicStore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        DBHelper dbHelper;
+        public HomeController(ILogger<HomeController> logger, electronic_storeContext context)
         {
             _logger = logger;
+            dbHelper = new DBHelper(context);
         }
 
         public IActionResult Index()
         {
+            ViewData["lstProduct"] = dbHelper.GetProducts();
             return View();
         }
 
