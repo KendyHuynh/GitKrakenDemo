@@ -18,33 +18,33 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link" data-toggle="dropdown">Điện thoại <i class="fa fa-angle-down float-right mt-1"></i></a>
                         <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                            <a href="#" class="dropdown-item">Iphone</a>
-                            <a href="#" class="dropdown-item">Samsung</a>
-                            <a href="#" class="dropdown-item">Oppo</a>
-                            <a href="#" class="dropdown-item">Xiaomi</a>
-                            <a href="#" class="dropdown-item">Nokia</a>
-                            <a href="#" class="dropdown-item">Realme</a>
-                            <a href="#" class="dropdown-item">Vivo</a>
-                            <a href="#" class="dropdown-item">Khác...</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Iphone" class="dropdown-item">Iphone</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Samsung" class="dropdown-item">Samsung</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Oppo" class="dropdown-item">Oppo</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Xiaomi" class="dropdown-item">Xiaomi</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Nokia" class="dropdown-item">Nokia</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Realme" class="dropdown-item">Realme</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Vivo" class="dropdown-item">Vivo</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="" class="dropdown-item">Khác...</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link" data-toggle="dropdown">Laptop<i class="fa fa-angle-down float-right mt-1"></i></a>
                         <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                            <a href="#" class="dropdown-item">Dell</a>
-                            <a href="#" class="dropdown-item">Asus</a>
-                            <a href="#" class="dropdown-item">Lenovo</a>
-                            <a href="#" class="dropdown-item">Acer</a>
-                            <a href="#" class="dropdown-item">Macbook</a>
-                            <a href="#" class="dropdown-item">HP</a>
-                            <a href="#" class="dropdown-item">Khác...</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Dell" class="dropdown-item">Dell</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Asus" class="dropdown-item">Asus</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Lenovo" class="dropdown-item">Lenovo</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Acer" class="dropdown-item">Acer</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="Macbook" class="dropdown-item">Macbook</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="HP" class="dropdown-item">HP</a>
+                            <a asp-controller="Product" asp-action="Index" asp-route-childname="" class="dropdown-item">Khác...</a>
                         </div>
                     </div>
-                    <a href="#" class="nav-item nav-link">Máy tính - PC</a>
-                    <a href="#" class="nav-item nav-link">Đồng hồ</a>
-                    <a href="#" class="nav-item nav-link">Tivi</a>
-                    <a href="#" class="nav-item nav-link">Tai nghe</a>
-                    <a href="#" class="nav-item nav-link">Phụ kiện</a>
+                    <a asp-controller="Product" asp-action="Index" asp-route-childname="Máy tính" class="nav-item nav-link">Máy tính - PC</a>
+                    <a asp-controller="Product" asp-action="Index" asp-route-childname="Đồng hồ" class="nav-item nav-link">Đồng hồ</a>
+                    <a asp-controller="Product" asp-action="Index" asp-route-childname="Tivi" class="nav-item nav-link">Tivi</a>
+                    <a asp-controller="Product" asp-action="Index" asp-route-childname="Tai nghe" class="nav-item nav-link">Tai nghe</a>
+                    <a asp-controller="Product" asp-action="Index" asp-route-childname="Phụ kiện" class="nav-item nav-link">Phụ kiện</a>
                 </div>
             </nav>
         </div>
@@ -125,13 +125,13 @@
                                                  style="width: 100%; height: 250px; object-fit: cover">
                                         </div>
                                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">@product.ProductName</h6>
+                                            <h6 class="text-truncate mb-3"><a asp-controller="Product" asp-action="Detail" asp-route-ID="@product.ProductId">@product.ProductName</a></h6>
                                             <div class="d-flex justify-content-center">
                                                 <h6>@product.Price</h6>
                                             </div>
                                         </div>
                                         <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0">
+                                            <a asp-controller="Product" asp-action="Detail" asp-route-ID="@product.ProductId" class="btn btn-sm text-dark p-0">
                                                 <i class="fas fa-eye text-primary mr-1"></i>View Detail
                                             </a>
                                             <a href="" class="btn btn-sm text-dark p-0">

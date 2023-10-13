@@ -64,12 +64,12 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form asp-action="Index" method="get" asp-controller="Product">
+                <form asp-action="Index" asp-controller="Product" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm" name="name">
+                        <input type="text" class="form-control my-0 py-1 red-border" placeholder="Tìm kiếm sản phẩm" name="childname" id="searchInput">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
+                            <span class="input-group-text bg-transparent text-primary" id="basic-text">
+                                <i class="fas fa-search text-yellow" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
@@ -94,35 +94,35 @@
                 <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-toggle="dropdown">Điện thoại <i class="fa fa-angle-down float-right mt-1"></i></a>
+                            <a href="#" class="nav-link" id="phoneDropdown"data-toggle="dropdown">Điện thoại <i class="fa fa-angle-down float-right mt-1"></i></a>
                             <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="#" class="dropdown-item">Iphone</a>
-                                <a href="#" class="dropdown-item">Samsung</a>
-                                <a href="#" class="dropdown-item">Oppo</a>
-                                <a href="#" class="dropdown-item">Xiaomi</a>
-                                <a href="#" class="dropdown-item">Nokia</a>
-                                <a href="#" class="dropdown-item">Realme</a>
-                                <a href="#" class="dropdown-item">Vivo</a>
-                                <a href="#" class="dropdown-item">Khác...</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Iphone" class="dropdown-item">Iphone</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Samsung" class="dropdown-item">Samsung</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Oppo" class="dropdown-item">Oppo</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Xiaomi" class="dropdown-item">Xiaomi</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Nokia" class="dropdown-item">Nokia</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Realme" class="dropdown-item">Realme</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Vivo" class="dropdown-item">Vivo</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="" class="dropdown-item">Khác...</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link" data-toggle="dropdown">Laptop<i class="fa fa-angle-down float-right mt-1"></i></a>
                             <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="#" class="dropdown-item">Dell</a>
-                                <a href="#" class="dropdown-item">Asus</a>
-                                <a href="#" class="dropdown-item">Lenovo</a>
-                                <a href="#" class="dropdown-item">Acer</a>
-                                <a href="#" class="dropdown-item">Macbook</a>
-                                <a href="#" class="dropdown-item">HP</a>
-                                <a href="#" class="dropdown-item">Khác...</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Dell" class="dropdown-item">Dell</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Asus" class="dropdown-item">Asus</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Lenovo" class="dropdown-item">Lenovo</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Acer" class="dropdown-item">Acer</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Macbook" class="dropdown-item">Macbook</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="HP" class="dropdown-item">HP</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="" class="dropdown-item">Khác...</a>
                             </div>
                         </div>
-                        <a href="#" class="nav-item nav-link">Máy tính - PC</a>
-                        <a href="#" class="nav-item nav-link">Đồng hồ</a>
-                        <a href="#" class="nav-item nav-link">Tivi</a>
-                        <a href="#" class="nav-item nav-link">Tai nghe</a>
-                        <a href="#" class="nav-item nav-link">Phụ kiện</a>
+                        <a asp-controller="Product" asp-action="Index" asp-route-childname="Máy tính" class="nav-item nav-link">Máy tính - PC</a>
+                        <a asp-controller="Product" asp-action="Index" asp-route-childname="Đồng hồ" class="nav-item nav-link">Đồng hồ</a>
+                        <a asp-controller="Product" asp-action="Index" asp-route-childname="Tivi" class="nav-item nav-link">Tivi</a>
+                        <a asp-controller="Product" asp-action="Index" asp-route-childname="Tai nghe" class="nav-item nav-link">Tai nghe</a>
+                        <a asp-controller="Product" asp-action="Index" asp-route-childname="Phụ kiện" class="nav-item nav-link">Phụ kiện</a>
                     </div>
                 </nav>
             </div>
@@ -270,27 +270,9 @@
     <script src="js/main.js"></script>
 
     <script>
-        function searchProducts() {
-            var searchTerm = document.getElementById("searchInput").value;
-
-            // Gửi yêu cầu tìm kiếm sản phẩm đến máy chủ (có thể dùng AJAX)
-
-            // Ví dụ sử dụng AJAX
-            $.ajax({
-                url: "/Product/Search", // Đặt URL của action xử lý tìm kiếm
-                type: "POST",
-                data: { searchTerm: searchTerm },
-                success: function (data) {
-                    // Xử lý dữ liệu trả về từ máy chủ, có thể cập nhật giao diện hiển thị sản phẩm tìm kiếm ở đây
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-
-            // Ngăn chặn form gửi lại trang
-            return false;
-        }
+        document.getElementById("searchInput").addEventListener("input", function () {
+            
+        });
     </script>
 </body>
 

@@ -64,12 +64,12 @@
                 </a>
             </div>
             <div class="col-lg-6 col-6 text-left">
-                <form asp-action="Index" method="get" asp-controller="Product">
+                <form asp-action="Index" asp-controller="Product" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm" name="name">
+                        <input type="text" class="form-control my-0 py-1 red-border" placeholder="Tìm kiếm sản phẩm" name="childname" id="searchInput">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
+                            <span class="input-group-text bg-transparent text-primary" id="basic-text">
+                                <i class="fas fa-search text-yellow" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
@@ -204,28 +204,11 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+
     <script>
-        function searchProducts() {
-            var searchTerm = document.getElementById("searchInput").value;
+        document.getElementById("searchInput").addEventListener("input", function () {
 
-            // Gửi yêu cầu tìm kiếm sản phẩm đến máy chủ (có thể dùng AJAX)
-
-            // Ví dụ sử dụng AJAX
-            $.ajax({
-                url: "/Product/Search", // Đặt URL của action xử lý tìm kiếm
-                type: "POST",
-                data: { searchTerm: searchTerm },
-                success: function (data) {
-                    // Xử lý dữ liệu trả về từ máy chủ, có thể cập nhật giao diện hiển thị sản phẩm tìm kiếm ở đây
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-
-            // Ngăn chặn form gửi lại trang
-            return false;
-        }
+        });
     </script>
 </body>
 
