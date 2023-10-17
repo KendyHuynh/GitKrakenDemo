@@ -5,7 +5,7 @@
 @{
     Layout = "_HomeLayout";
 }
-
+@using Microsoft.AspNetCore.Http
 <div class="container-fluid mb-5">
     <div class="row border-top px-xl-5">
         <div class="col-lg-3 d-none d-lg-block">
@@ -61,9 +61,22 @@
                         <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Trang chủ</a>
                         <a asp-controller="Product" asp-action="Index" class="nav-item nav-link active">Sản phẩm</a>
                     </div>
-                    <div class="navbar-nav ml-auto py-0">
-                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-item nav-link">Đăng nhập</a>
-                        <a href="" class="nav-item nav-link">Đăng ký</a>
+                    <div class="navbar-nav ml-auto py-0">                      
+                        @if ( @Context.Session.GetString("IsLoggedIn") == "true")
+                        {
+                            <div>
+                                <p>Xin chào, @Context.Session.GetString("Username")!!!</p>
+                                <a asp-controller="Account" asp-action="Profile">Trang cá nhân</a>
+                                <a asp-controller="Account" asp-action="Logout">Đăng xuất</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <a asp-controller="Account" asp-action="Login">Đăng nhập</a>
+                                <a asp-controller="Account" asp-action="Register">Đăng ký</a>
+                            </div>
+                        }
                     </div>
                 </div>
             </nav>

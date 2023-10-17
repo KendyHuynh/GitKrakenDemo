@@ -43,13 +43,13 @@ namespace MVCElectronicStore.Models
 
         public Category GetCategoryById(int? categoryId)
         {
-                return _db.Categories.FirstOrDefault(c => c.CategoryId == categoryId.Value);
-            
+            return _db.Categories.FirstOrDefault(c => c.CategoryId == categoryId.Value);
+
         }
 
         public Brand GetBrandById(int? brandId)
         {
-                return _db.Brands.FirstOrDefault(b => b.BrandId == brandId.Value);
+            return _db.Brands.FirstOrDefault(b => b.BrandId == brandId.Value);
         }
 
         public List<Product> GetProductsByBrand(string searchTerm)
@@ -63,6 +63,16 @@ namespace MVCElectronicStore.Models
             // Tìm kiếm sản phẩm dựa trên category.
             return _db.Products.Where(p => p.Category.CategoryName.Contains(searchTerm)).ToList();
         }
+        public void SaveUser(User user)
+        {
+            _db.Users.Add(user);
+            _db.SaveChanges();
+        }
 
+        public User GetUserByUsername(string username)
+        {
+            // Tìm người dùng dựa trên username
+            return _db.Users.FirstOrDefault(u => u.Username == username);
+        }
     }
 }
