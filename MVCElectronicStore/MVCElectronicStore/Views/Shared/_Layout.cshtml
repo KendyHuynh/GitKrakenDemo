@@ -76,12 +76,28 @@
                     </div>
                 </form>
             </div>
+            @{
+                var isLoggedIn = Context.Session.GetString("IsLoggedIn") == "true";
+                var cartItemCount = Context.Session.GetInt32("CartItemCount");
+            }
+
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
+                @if (isLoggedIn)
+                {
+                    <a asp-controller="Cart" asp-action="ShoppingCart" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge">@ViewBag.CartItemQuantity</span>
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge">@ViewBag.CartItemQuantityt</span>
+                    </a>
+                }
             </div>
+
         </div>
     </div>
     <!-- Topbar End -->

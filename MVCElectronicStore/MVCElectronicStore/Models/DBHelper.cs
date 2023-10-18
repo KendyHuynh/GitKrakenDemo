@@ -74,5 +74,11 @@ namespace MVCElectronicStore.Models
             // Tìm người dùng dựa trên username
             return _db.Users.FirstOrDefault(u => u.Username == username);
         }
+        public int GetCartItemQuantity(int cartId)
+        {
+            // Tính tổng số lượng sản phẩm trong giỏ hàng dựa trên cartId
+            return _db.CartItems.Where(ci => ci.CartId == cartId).Sum(ci => ci.Quantity);
+        }
+
     }
 }

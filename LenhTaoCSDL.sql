@@ -123,6 +123,18 @@ ADD primary_image_id INT;
 ALTER TABLE products
 ADD FOREIGN KEY (primary_image_id) REFERENCES product_images(image_id);
 
+-- Thêm ràng buộc UNIQUE vào cột username trong bảng users
+ALTER TABLE users
+ADD CONSTRAINT UQ_Username UNIQUE (username);
+
+-- Thêm ràng buộc UNIQUE vào cột phone_number trong bảng users
+ALTER TABLE users
+ADD CONSTRAINT UQ_PhoneNumber UNIQUE (phone_number);
+
+-- Thêm ràng buộc UNIQUE vào cột phone_number trong bảng users
+ALTER TABLE users
+ADD CONSTRAINT UQ_Email UNIQUE (email);
+
 --Insert dữ liệu
 INSERT INTO categories (category_name)
 VALUES

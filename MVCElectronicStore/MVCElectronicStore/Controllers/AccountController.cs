@@ -21,7 +21,6 @@ namespace MVCElectronicStore.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -32,17 +31,16 @@ namespace MVCElectronicStore.Controllers
                 {
                     HttpContext.Session.SetString("Username", model.Username);
                     HttpContext.Session.SetString("IsLoggedIn", "true");
+                    HttpContext.Session.SetInt32("CurrentUserId", user.UserId);
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Tên đăng nhập hoặc mật khẩu không hợp lệ.");
+                    ViewBag.ErrorMessage = "Tên đăng nhập hoặc mật khẩu không hợp lệ.";
                 }
             }
             return View(model);
         }
-
-
 
         public IActionResult Logout()
         {
@@ -55,30 +53,58 @@ namespace MVCElectronicStore.Controllers
         {
             return View();
         }
-
         [HttpPost]
-        public IActionResult Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Tạo một đối tượng User từ thông tin đăng ký
-                var user = new User
+                // Kiểm tra xem "username" đã tồn tại trong cơ sở dữ liệu chưa
+                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
+                if (existingUser != null)
                 {
-                    Username = model.Username,
-                    Password = model.Password,
-                    Email = model.Email,
-                    FullName = model.FullName,
-                    Address = model.Address,
-                    PhoneNumber = model.PhoneNumber
-                };
+                    ViewBag.ErrorMessage = "Tên đăng nhập đã tồn tại. Vui lòng chọn một tên đăng nhập khác.";
+                    return View(model);
+                }
 
-                // Lưu thông tin người dùng vào cơ sở dữ liệu bằng cách sử dụng DBHelper
-                _dbHelper.SaveUser(user);
+                // Kiểm tra xem "phone number" đã tồn tại trong cơ sở dữ liệu chưa
+                existingUser = await _context.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber);
+                if (existingUser != null)
+                {
+                    ViewBag.ErrorMessage = "Số điện thoại đã được sử dụng bởi một tài khoản khác. Vui lòng nhập số điện thoại khác.";
+                    return View(model);
+                }
+                // Kiểm tra xem "email" đã tồn tại trong cơ sở dữ liệu chưa
+                existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                if (existingUser != null)
+                {
+                    ViewBag.ErrorMessage = "Email đã được sử dụng bởi một tài khoản khác. Vui lòng nhập email khác.";
+                    return View(model);
+                }
 
-                return RedirectToAction("Login", "Account");
+                if (ModelState.IsValid)  // Kiểm tra ModelState lại một lần nữa sau khi kiểm tra tồn tại
+                {
+                    // Tạo một đối tượng User từ thông tin đăng ký
+                    var user = new User
+                    {
+                        Username = model.Username,
+                        Password = model.Password,
+                        Email = model.Email,
+                        FullName = model.FullName,
+                        Address = model.Address,
+                        PhoneNumber = model.PhoneNumber
+                    };
+
+                    // Lưu thông tin người dùng vào cơ sở dữ liệu bằng cách sử dụng DBHelper
+                    _dbHelper.SaveUser(user);
+
+                    return RedirectToAction("Login", "Account");
+                }
             }
+
+            // Trả về view với model và ModelState chứa thông báo lỗi
             return View(model);
         }
+
         public IActionResult Profile()
         {
             if (HttpContext.Session.GetString("IsLoggedIn") == "true")

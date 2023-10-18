@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var cartItem in Model)
+{
+    <div>
+        <h4>@cartItem.Product.ProductName</h4>
+        <p>Số lượng: @cartItem.Quantity</p>
+        <p>Giá: @cartItem.Product.Price</p>
+        <p>Tổng cộng: @cartItem.Subtotal</p>
+    </div>
+}
+<div>
+    @{
+        decimal total = 0;
+        foreach (var item in Model)
+        {
+            total += item.Subtotal;
+        }
+    }
+    <h4>Tổng tiền: @total</h4>
+</div>
+<div>
+    <a asp-action="Checkout" class="btn btn-primary">Thanh toán</a>
+</div>

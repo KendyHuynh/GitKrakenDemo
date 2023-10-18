@@ -26,7 +26,7 @@
                         <p class="card-text" style="font-size: 18px;">Thương hiệu: @product.BrandName</p>
                         <div class="text-center mt-4">
                             <button class="btn btn-primary" id="buyNowButton">Mua Ngay</button>
-                            <button class="btn btn-success" id="addToCartButton">Thêm vào Giỏ Hàng</button>
+                            <button asp-controller="Cart" asp-action="AddToCart" class="btn btn-success" id="addToCartButton">Thêm vào Giỏ Hàng</button>
                         </div>
                     </div>
                 </div>
