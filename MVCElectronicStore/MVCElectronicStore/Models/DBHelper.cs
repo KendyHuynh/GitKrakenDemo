@@ -68,6 +68,11 @@ namespace MVCElectronicStore.Models
             _db.Users.Add(user);
             _db.SaveChanges();
         }
+        public void UpdateUser(User user)
+        {
+            _db.Users.Update(user);
+            _db.SaveChanges();
+        }
 
         public User GetUserByUsername(string username)
         {

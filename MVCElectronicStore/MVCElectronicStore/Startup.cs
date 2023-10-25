@@ -79,6 +79,11 @@ namespace MVCElectronicStore
                     name: "search",
                     pattern: "Product/Search",
                     defaults: new { controller = "Product", action = "Search" });
+                endpoints.MapControllerRoute(
+                    name: "AddToCart",
+                    pattern: "cart/add",
+                    defaults: new { controller = "Cart", action = "AddToCart" }
+                );
 
             });
         }

@@ -32,9 +32,12 @@
                                 <a asp-controller="Product" asp-action="Detail" asp-route-ID="@product.ProductId"class="btn btn-sm text-dark p-0">
                                     <i class="fas fa-eye text-primary mr-1"></i>View Detail
                                 </a>
-                                <a  asp-controller="Cart" asp-action="AddToCart" class="btn btn-sm text-dark p-0">
-                                    <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-                                </a>
+                                <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                    <input type="hidden" name="productId" value="@product.ProductId" />
+                                    <button type="submit" class="btn btn-sm text-dark p-0">
+                                        <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

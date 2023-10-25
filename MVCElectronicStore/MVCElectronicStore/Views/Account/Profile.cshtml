@@ -4,13 +4,13 @@
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@if (!string.IsNullOrEmpty(ViewBag.ThongBao))
+<h2 style="text-align: center">Hồ sơ cá nhân</h2>
+<div class="row">
+    @if (!string.IsNullOrEmpty(ViewBag.ThongBao))
 {
     <div class="alert alert-info">@ViewBag.ThongBao</div>
 }
 
-<h2 style="text-align: center">Hồ sơ cá nhân</h2>
-<div class="row">
     <div class="offset-md-1 col-md-10">
         <dl class="row">
             <dt class="col-sm-3">Tên đăng nhập:</dt>
@@ -27,6 +27,8 @@
 
             <dt class="col-sm-3">Số điện thoại:</dt>
             <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+            <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-primary">Thay đổi mật khẩu</a>
         </dl>
     </div>
 </div>

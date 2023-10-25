@@ -86,14 +86,14 @@
                 {
                     <a asp-controller="Cart" asp-action="ShoppingCart" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">@ViewBag.CartItemQuantity</span>
+                        <span class="badge" id="cartItemCount">@ViewBag.CartItemQuantity</span>
                     </a>
                 }
                 else
                 {
                     <a asp-controller="Account" asp-action="Login" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">@ViewBag.CartItemQuantityt</span>
+                        <span class="badge" id="cartItemCount">@ViewBag.CartItemQuantity</span>
                     </a>
                 }
             </div>
@@ -308,6 +308,30 @@
 
         });
     </script>
+    <script>
+    // Đảm bảo rằng tất cả các HTML đã được tải
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy tham chiếu đến phần tử span hiển thị số lượng giỏ hàng
+        var cartItemCountElement = document.getElementById("cartItemCount");
+
+        // Hàm để cập nhật số lượng sản phẩm trong giỏ hàng
+        function updateCartItemCount(newCount) {
+            cartItemCountElement.innerText = newCount;
+        }
+
+        // Mô phỏng việc cập nhật số lượng sản phẩm 
+        var cartItemCount = @ViewBag.CartItemQuantity;
+        updateCartItemCount(cartItemCount);
+
+        // Có thể sử dụng sự kiện click trên nút "Thêm vào giỏ hàng"
+        var addToCartButton = document.getElementById("addToCartButton"); 
+        addToCartButton.addEventListener("click", function () {
+            cartItemCount += 1;
+            updateCartItemCount(cartItemCount);
+        });
+    });
+    </script>
+
 </body>
 
 </html>

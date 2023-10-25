@@ -85,14 +85,14 @@
                 {
                     <a asp-controller="Cart" asp-action="ShoppingCart" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">@ViewBag.CartItemQuantity</span>
+                        <span class="badge" id="cartItemCount">@ViewBag.CartItemQuantity</span>
                     </a>
                 }
                 else
                 {
                     <a asp-controller="Account" asp-action="Login" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">@ViewBag.CartItemQuantityt</span>
+                        <span class="badge" id="cartItemCount">@ViewBag.CartItemQuantity</span>
                     </a>
                 }
             </div>
@@ -226,6 +226,32 @@
 
         });
     </script>
+    <script>
+    // Đảm bảo rằng tất cả các HTML đã được tải
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy tham chiếu đến phần tử span hiển thị số lượng giỏ hàng
+        var cartItemCountElement = document.getElementById("cartItemCount");
+
+        // Hàm để cập nhật số lượng sản phẩm trong giỏ hàng
+        function updateCartItemCount(newCount) {
+            cartItemCountElement.innerText = newCount;
+        }
+
+        // Mô phỏng việc cập nhật số lượng sản phẩm (có thể sử dụng Ajax để lấy số liệu thực tế từ máy chủ)
+        var cartItemCount = @ViewBag.CartItemQuantity; // Điều này giả định số lượng sản phẩm ban đầu
+        updateCartItemCount(cartItemCount);
+
+        // Ví dụ: cập nhật số lượng khi người dùng thêm sản phẩm vào giỏ hàng
+        // Có thể sử dụng sự kiện click trên nút "Thêm vào giỏ hàng"
+        var addToCartButton = document.getElementById("addToCartButton"); // Điều này cần phải có id trong nút "Thêm vào giỏ hàng"
+        addToCartButton.addEventListener("click", function () {
+            // Tính toán và cập nhật số lượng sản phẩm trong giỏ hàng sau khi thêm sản phẩm
+            cartItemCount += 1; // Ví dụ: tăng số lượng lên 1 sau khi thêm sản phẩm
+            updateCartItemCount(cartItemCount);
+        });
+    });
+    </script>
+
 </body>
 
 </html>

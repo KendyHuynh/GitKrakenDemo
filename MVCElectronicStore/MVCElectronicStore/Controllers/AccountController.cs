@@ -135,5 +135,56 @@ namespace MVCElectronicStore.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Lấy tên đăng nhập từ session
+                var username = HttpContext.Session.GetString("Username");
+
+                // Tìm người dùng dựa trên tên đăng nhập
+                var user = _dbHelper.GetUserByUsername(username);
+
+                if (user != null)
+                {
+                    // Kiểm tra xem mật khẩu cũ có khớp không
+                    if (model.OldPassword == user.Password)
+                    {
+                        // Kiểm tra xem mật khẩu mới và mật khẩu xác nhận khớp nhau
+                        if (model.NewPassword == model.ConfirmNewPassword)
+                        {
+                            // Cập nhật mật khẩu mới cho người dùng
+                            user.Password = model.NewPassword;
+
+                            // Lưu thông tin người dùng đã cập nhật
+                            _dbHelper.UpdateUser(user);
+
+                            ViewBag.ThongBao = "Mật khẩu đã được thay đổi.";
+                        }
+                        else
+                        {
+                            ViewBag.ThongBao = "Mật khẩu xác nhận không khớp.";
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.ThongBao = "Mật khẩu cũ không đúng.";
+                    }
+                }
+                else
+                {
+                    ViewBag.ThongBao = "Không tìm thấy thông tin người dùng.";
+                }
+            }
+
+            return View(model);
+        }
     }
 }

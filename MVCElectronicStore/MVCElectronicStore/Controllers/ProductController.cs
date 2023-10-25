@@ -66,6 +66,7 @@ namespace MVCElectronicStore.Controllers
             {
                 ProductViewModel productVM = new ProductViewModel()
                 {
+                    ProductId = product.ProductId,
                     ProductName = product.ProductName,
                     Image = product.Image,
                     Description = product.Description,
