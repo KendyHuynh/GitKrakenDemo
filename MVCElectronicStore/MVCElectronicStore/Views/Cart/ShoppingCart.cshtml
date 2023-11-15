@@ -1,0 +1,84 @@
+﻿@model List<CartItem>
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var cartItemIdError = ViewData["cartItemIdError"] as string;
+}
+
+<h1>Giỏ hàng của bạn</h1>
+@if (!string.IsNullOrEmpty(cartItemIdError))
+{
+    <span class="text-danger">@cartItemIdError</span>
+}
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Hình ảnh</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Tổng cộng</th>
+                <th scope="col">Xóa</th> <!-- Thêm cột Xóa -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cartItem in Model)
+            {
+                <tr>
+                    <td scope="row">@cartItem.Product.ProductName</td>
+                    <td scope="row">
+                        <form asp-controller="Cart" asp-action="DecreaseCartItemQuantity" asp-route-cartItemId="@cartItem.CartItemId" method="post" class="d-inline">
+                            <input type="hidden" name="cartItemId" value="@cartItem.CartItemId" />
+                            <button type="submit" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </form>
+
+                        <span class="mx-2">@cartItem.Quantity</span>
+
+                        <form asp-controller="Cart" asp-action="IncreaseCartItemQuantity" asp-route-cartItemId="@cartItem.CartItemId" method="post" class="d-inline">
+                            <input type="hidden" name="cartItemId" value="@cartItem.CartItemId" />
+                            <button type="submit" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </form>
+                    </td>
+
+                    <td scope="row"><img src="~/images/@cartItem.Product.Image" alt="@cartItem.Product.Image" width="100"></td>
+                    <td scope="row">@cartItem.Product.Price VND</td>
+                    @{
+                        cartItem.Subtotal = cartItem.Quantity * cartItem.Product.Price;
+                    }
+                    <td scope="row">@cartItem.Subtotal VND</td>
+                    <td scope="row">
+                        <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="cartItemId" value="@cartItem.CartItemId" />
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Xóa
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        @{
+            decimal total = Model.Sum(cartItem => cartItem.Quantity * cartItem.Product.Price);
+        }
+        <h4>Tổng tiền: @total VND</h4>
+
+    </div>
+    <div>
+        <a asp-action="Checkout" class="btn btn-primary">Thanh toán</a>
+    </div>
+}
+else
+{
+    <p>Giỏ hàng của bạn đang rỗng. Hãy thêm sản phẩm vào giỏ hàng!</p>
+}

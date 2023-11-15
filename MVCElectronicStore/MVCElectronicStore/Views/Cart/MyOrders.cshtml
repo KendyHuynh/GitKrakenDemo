@@ -1,0 +1,69 @@
+﻿@model List<Order>
+
+@{
+    ViewData["Title"] = "Đơn hàng của tôi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Đơn hàng của tôi</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Mã đơn hàng</th>
+                <th scope="col">Ngày đặt hàng</th>
+                <th scope="col">Tổng tiền</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Hủy đơn hàng</th>
+                <th scope="col">Chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+            <tr>
+                <td>@order.OrderId</td>
+                <td>@order.OrderDate</td>
+                <td>@order.TotalPrice VND</td>
+                <td>@order.Status</td>
+                <td>
+                    @if (order.Status == "Pending")
+                    {
+                        <button class="btn btn-danger" onclick="confirmCancelOrder(@order.OrderId)">Hủy đơn hàng</button>
+                    }
+                    else
+                    {
+                        <p>Đơn hàng không thể hủy.</p>
+                    }
+                </td>
+                <td><a asp-action="OrderDetails" asp-route-orderId="@order.OrderId">Xem chi tiết</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Bạn chưa có đơn hàng nào.</p>
+}
+<script>
+    function confirmCancelOrder(orderId) {
+        var confirmCancel = confirm("Bạn có chắc muốn hủy đơn hàng?");
+        if (confirmCancel) {
+            // Sử dụng Ajax để gửi yêu cầu hủy đơn hàng
+            $.ajax({
+                type: "POST",
+                url: "/cart/confirm-cancel-order/" + orderId,
+                success: function (data) {
+                    // Xử lý kết quả nếu cần thiết
+                    location.reload(); // Tải lại trang sau khi hủy đơn hàng thành công
+                },
+                error: function (error) {
+                    console.error("Lỗi khi hủy đơn hàng: ", error);
+                }
+            });
+        }
+    }
+</script>

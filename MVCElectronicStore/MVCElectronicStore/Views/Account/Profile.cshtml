@@ -1,0 +1,34 @@
+﻿@model MVCElectronicStore.Models.UserProfileViewModel
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 style="text-align: center">Hồ sơ cá nhân</h2>
+<div class="row">
+    @if (!string.IsNullOrEmpty(ViewBag.ThongBao))
+{
+    <div class="alert alert-info">@ViewBag.ThongBao</div>
+}
+
+    <div class="offset-md-1 col-md-10">
+        <dl class="row">
+            <dt class="col-sm-3">Tên đăng nhập:</dt>
+            <dd class="col-sm-9">@Model.Username</dd>
+
+            <dt class="col-sm-3">Email:</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Họ và tên:</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+
+            <dt class="col-sm-3">Địa chỉ:</dt>
+            <dd class="col-sm-9">@Model.Address</dd>
+
+            <dt class="col-sm-3">Số điện thoại:</dt>
+            <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+            <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-primary">Thay đổi mật khẩu</a>
+        </dl>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Đặt hàng thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var lstOrderItem = ViewData["lstOrderItem"] as IEnumerable<OrderItem>;
+}
+
+<h1>Đặt hàng thành công</h1>
+
+<p>Cảm ơn bạn đã đặt hàng! Đơn hàng của bạn đã được xác nhận và đang được xử lý.</p>
+
+<h2>Thông tin đơn hàng</h2>
+
+<table class="table">
+    <tr>
+        <th>Mã đơn hàng</th>
+        <th>Ngày đặt hàng</th>
+        <th>Địa chỉ giao hàng</th>
+        <th>Tổng tiền</th>
+    </tr>
+    <tr>
+        <td>@Model.OrderId</td>
+        <td>@Model.OrderDate</td>
+        <td>@Model.ShippingAddress</td>
+        <td>@Model.TotalPrice VND</td>
+    </tr>
+</table>
+
+<h2>Các mặt hàng trong đơn hàng</h2>
+
+<table class="table">
+    <tr>
+        <th>Tên sản phẩm</th>
+        <th>Số lượng</th>
+        <th>Tổng cộng</th>
+    </tr>
+    @foreach (var item in Model.OrderItems)
+    {
+        <tr>
+            <td>@item.Product.ProductName</td>
+            <td>@item.Quantity</td>
+            <td>@item.Subtotal VND</td>
+        </tr>
+    }
+</table>
