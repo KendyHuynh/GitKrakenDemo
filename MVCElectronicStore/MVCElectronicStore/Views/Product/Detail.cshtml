@@ -25,8 +25,13 @@
                         <p class="card-text" style="font-size: 18px;">Thể loại: @product.CategoryName</p>
                         <p class="card-text" style="font-size: 18px;">Thương hiệu: @product.BrandName</p>
                         <div>
-                            <button class="btn btn-primary btn-block" id="buyNowButton">Mua Ngay</button>
-                            <div> </div>
+
+                            <form asp-controller="Cart" asp-action="BuyNow" method="post">
+                                <input type="hidden" name="productId" value="@product.ProductId" />
+                                <button class="btn btn-primary btn-block" id="buyNowButton">Mua Ngay</button>
+                            </form>
+
+
                             <form asp-controller="Cart" asp-action="AddToCart" method="post">
                                 <input type="hidden" name="productId" value="@product.ProductId" />
                                 <button class="btn btn-success btn-block" id="addToCartButton">

@@ -29,6 +29,28 @@ namespace MVCElectronicStore.Areas.Admin.Controllers
             ViewData["lstCategogy"] = dbHelper.GetCategories();
             return View();
         }
+        public IActionResult Seller_Order()
+        {
+            ViewData["lstOrder"] = dbHelper.GetOrders();
+            ViewData["lstOrderItem"] = dbHelper.GetOrderItems();
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ConfirmOrder(int orderId)
+        {
+           
+            dbHelper.ConfirmOrder(orderId);
+
+            return RedirectToAction("Seller_Order");
+        }
+        [HttpPost]
+        public IActionResult CancelOrder(int orderId)
+        {
+            dbHelper.CancelOrder(orderId);
+
+            return RedirectToAction("Seller_Order");
+        }
         public IActionResult Detail(int ID)
         {
             var product = dbHelper.GetProductById(ID);

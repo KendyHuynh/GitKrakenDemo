@@ -88,5 +88,41 @@ namespace MVCElectronicStore.Models
         {
             return _db.CartItems.FirstOrDefault(ci => ci.CartItemId == ID);
         }
+        public List<Order> GetOrders()
+        {
+            return _db.Orders.ToList();
+        }
+        public List<OrderItem> GetOrderItems()
+        {
+            return _db.OrderItems.ToList();
+        }
+
+        public void ConfirmOrder(int orderId)
+        {
+            var order = _db.Orders.FirstOrDefault(o => o.OrderId == orderId);
+
+            if (order != null)
+            {
+           
+                order.Status = "Confirmed";
+
+                _db.Orders.Update(order);
+                _db.SaveChanges();
+            }
+        }
+
+        public void CancelOrder(int orderId)
+        {
+            var order = _db.Orders.FirstOrDefault(o => o.OrderId == orderId);
+
+            if (order != null && order.Status == "Pending")
+            {
+                order.Status = "Cancelled";
+
+                _db.Orders.Update(order);
+                _db.SaveChanges();
+            }
+        }
+
     }
 }

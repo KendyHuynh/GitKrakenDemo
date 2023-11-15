@@ -26,54 +26,56 @@
     <!-- /.content-header -->
     <!-- Main content -->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <a class="btn btn-primary" asp-area="Admin" asp-controller="Dashboard" asp-action="Create">Create Product</a>
-            </div>
-        </div>
-
         <div class="row mt-3">
             <div class="col-12">
                 <table class="table table-bordered">
 
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Configuration Infor</th>
-                            <th scope="col">Product Type</th>
-                            <th scope="col">Provider</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Option</th>
+                            <th scope="col">Mã đơn hàng</th>
+                            <th scope="col">Ngày đặt hàng</th>
+                            <th scope="col">Tổng tiền</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Hủy đơn hàng</th>
+                            <th scope="col">Chi tiết</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (lstProduct != null)
+                        @if (lstOrder != null && lstOrderItem !=null)
                         {
-                            @for (var i = 0; i < lstProduct.Count(); i++)
+                            @for (var i = 0; i < lstOrder.Count(); i++)
                             {
-                                var product = lstProduct.ElementAtOrDefault(i);
-                                <tr>
-                                    <td scope="row" width="100">@product.ProductId</td>
-                                    <td scope="row" width="150">@product.ProductName</td>
-                                    <td scope="row"><img src="~/images/@product.Image" alt="@product.Image" width="100"></td>
-                                    <td scope="row" width="170">@product.Description</td>
-                                    <td scope="row" width="150">@product.Category.CategoryName</td>
-                                    <td scope="row" width="100">@product.Brand.BrandName</td>
-                                    <td scope="row" width="150">@product.Price</td>
-                                    <td>
-                                        <a class="btn btn-info" asp-area="Admin" asp-controller="Dashboard" asp-action="Detail" asp-route-ID="@product.ProductId">View Detail</a>
-                                        <a class="btn btn-warning" asp-area="Admin" asp-controller="Dashboard" asp-action="Edit" asp-route-ID="@product.ProductId">Edit</a>
-                                        <a class="btn btn-danger" asp-area="Admin" asp-controller="Dashboard" asp-action="Delete" asp-route-ID="@product.ProductId">Delete</a>
-                                    </td>
-                                </tr>
+                                var order = lstOrder.ElementAtOrDefault(i);
+                        <tr>
+                            <td>@order.OrderId</td>
+                            <td>@order.OrderDate</td>
+                            <td>@order.TotalPrice VND</td>
+                            <td>@order.Status</td>
+                            <td>
+                            <td>
+                                @if (order.Status == "Pending")
+                                {
+                                    <form method="post" asp-action="ConfirmOrder" asp-route-orderId="@order.OrderId">
+                                        <button class="btn btn-success" type="submit">Xác nhận đơn hàng</button>
+                                    </form>
+                                    <form method="post" asp-action="CancelOrder" asp-route-orderId="@order.OrderId">
+                                        <button class="btn btn-danger" type="submit">Hủy đơn hàng</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <p>Đơn hàng không thể hủy.</p>
+                                }
+                            </td>
+                            </td>
+                            <td><a asp-action="OrderDetails" asp-route-orderId="@order.OrderId">View Detail</a></td>
+                        </tr>
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="8">No products available.</td>
+                                <td colspan="8">No orders available.</td>
                             </tr>
                         }
                     </tbody>

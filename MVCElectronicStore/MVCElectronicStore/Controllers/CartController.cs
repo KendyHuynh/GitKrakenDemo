@@ -379,7 +379,74 @@ namespace MVCElectronicStore.Controllers
 
             return RedirectToAction("MyOrders");
         }
+        [HttpPost]
+        [Route("cart/buy-now")]
+        public IActionResult BuyNow(int productId)
+        {
+            if (HttpContext.Session.GetString("IsLoggedIn") == "true")
+            {
+                var product = _dbHelper.GetProductById(productId);
+                var currentUserId = HttpContext.Session.GetInt32("CurrentUserId");
 
+                if (product != null && currentUserId.HasValue)
+                {
+                    var cart = _context.Carts.FirstOrDefault(c => c.UserId == currentUserId);
+
+                    if (cart == null)
+                    {
+                        // If no cart found for the user, create a new cart
+                        var newCart = new Cart
+                        {
+                            UserId = currentUserId.Value
+                        };
+                        _context.Carts.Add(newCart);
+                        _context.SaveChanges();
+                        cart = newCart;
+                    }
+
+                    // Check if the item already exists in the cart
+                    var existingCartItem = _context.CartItems.FirstOrDefault(ci => ci.CartId == cart.CartId && ci.ProductId == productId);
+
+                    if (existingCartItem != null)
+                    {
+                        // If the item already exists, update its quantity and subtotal
+                        existingCartItem.Quantity++;
+                        existingCartItem.Subtotal = existingCartItem.Quantity * product.Price;
+                    }
+                    else
+                    {
+                        // If the item doesn't exist, add a new cart item
+                        var cartItem = new CartItem
+                        {
+                            CartId = cart.CartId,
+                            ProductId = productId,
+                            Quantity = 1,
+                            Subtotal = 1 * product.Price
+                        };
+                        _context.CartItems.Add(cartItem);
+                    }
+
+                    _context.SaveChanges();
+
+                    // Update the total number of items in the cart
+                    var cartItemCount = CalculateCartItemCount();
+                    HttpContext.Session.SetInt32("CartItemCount", cartItemCount);
+
+                    // Redirect to the checkout page
+                    return RedirectToAction("Checkout");
+                }
+                else
+                {
+                    // Handle the case where the product is not found
+                    return View("ProductNotFound");
+                }
+            }
+            else
+            {
+                // If the user is not logged in, redirect to the login page
+                return RedirectToAction("Login", "Account");
+            }
+        }
 
     }
 }

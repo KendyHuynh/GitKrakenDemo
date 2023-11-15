@@ -102,8 +102,9 @@ namespace MVCElectronicStore
                     name: "confirmCancelOrder",
                     pattern: "cart/confirm-cancel-order/{orderId}",
                     defaults: new { controller = "Cart", action = "ConfirmCancelOrder" });
-
-
+                endpoints.MapControllerRoute(
+                 name: "areas",
+                 pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
             });
         }
     }
