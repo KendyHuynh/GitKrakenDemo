@@ -86,14 +86,14 @@
                 {
                     <a asp-controller="Cart" asp-action="ShoppingCart" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge" id="cartItemCount">@ViewBag.CartItemQuantity</span>
+                        <span class="badge" id="cartItemCount">@cartItemCount</span>
                     </a>
                 }
                 else
                 {
                     <a asp-controller="Account" asp-action="Login" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge" id="cartItemCount">@ViewBag.CartItemQuantity</span>
+                        <span class="badge" id="cartItemCount">@cartItemCount</span>
                     </a>
                 }
             </div>
@@ -120,7 +120,7 @@
                                 <a asp-controller="Product" asp-action="Index" asp-route-childname="Nokia" class="dropdown-item">Nokia</a>
                                 <a asp-controller="Product" asp-action="Index" asp-route-childname="Realme" class="dropdown-item">Realme</a>
                                 <a asp-controller="Product" asp-action="Index" asp-route-childname="Vivo" class="dropdown-item">Vivo</a>
-                                <a asp-controller="Product" asp-action="Index" asp-route-childname="" class="dropdown-item">Khác...</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Điện thoại" class="dropdown-item">Khác...</a>
                             </div>
                         </div>
                         <div class="nav-item dropdown">
@@ -132,7 +132,7 @@
                                 <a asp-controller="Product" asp-action="Index" asp-route-childname="Acer" class="dropdown-item">Acer</a>
                                 <a asp-controller="Product" asp-action="Index" asp-route-childname="Macbook" class="dropdown-item">Macbook</a>
                                 <a asp-controller="Product" asp-action="Index" asp-route-childname="HP" class="dropdown-item">HP</a>
-                                <a asp-controller="Product" asp-action="Index" asp-route-childname="" class="dropdown-item">Khác...</a>
+                                <a asp-controller="Product" asp-action="Index" asp-route-childname="Laptop" class="dropdown-item">Khác...</a>
                             </div>
                         </div>
                         <a asp-controller="Product" asp-action="Index" asp-route-childname="Máy tính" class="nav-item nav-link">Máy tính - PC</a>
@@ -159,11 +159,12 @@
                         <div class="navbar-nav ml-auto py-0">
                             @if (@Context.Session.GetString("IsLoggedIn") == "true")
                             {
-                                <div>
-                                    <p>Xin chào, @Context.Session.GetString("Username")!!!</p>
-                                    <a asp-controller="Account" asp-action="Profile">Trang cá nhân</a>
-                                    <a asp-controller="Account" asp-action="Logout">Đăng xuất</a>
-                                </div>
+                            <div>
+                                <p>Xin chào, @Context.Session.GetString("Username")!!!</p>
+                                <a asp-controller="Account" asp-action="Profile">Trang cá nhân</a>
+                                <a asp-controller="Cart" asp-action="MyOrders">Đơn hàng của tôi</a>
+                                <a asp-controller="Account" asp-action="Logout">Đăng xuất</a>
+                            </div>
                             }
                             else
                             {

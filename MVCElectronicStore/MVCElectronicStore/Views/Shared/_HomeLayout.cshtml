@@ -85,14 +85,14 @@
                 {
                     <a asp-controller="Cart" asp-action="ShoppingCart" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge" id="cartItemCount">@ViewBag.CartItemQuantity</span>
+                        <span class="badge" id="cartItemCount">@cartItemCount</span>
                     </a>
                 }
                 else
                 {
                     <a asp-controller="Account" asp-action="Login" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge" id="cartItemCount">@ViewBag.CartItemQuantity</span>
+                        <span class="badge" id="cartItemCount">@cartItemCount</span>
                     </a>
                 }
             </div>

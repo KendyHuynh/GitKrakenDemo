@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
+
 namespace MVCElectronicStore.Controllers
 {
     public class AccountController : Controller
@@ -62,7 +63,7 @@ namespace MVCElectronicStore.Controllers
                 var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
                 if (existingUser != null)
                 {
-                    ViewBag.ErrorMessage = "Tên đăng nhập đã tồn tại. Vui lòng chọn một tên đăng nhập khác.";
+                    ViewBag.ErrorMessage  = "Tên đăng nhập đã tồn tại. Vui lòng chọn một tên đăng nhập khác.";
                     return View(model);
                 }
 

@@ -84,6 +84,9 @@ namespace MVCElectronicStore.Models
             // Tính tổng số lượng sản phẩm trong giỏ hàng dựa trên cartId
             return _db.CartItems.Where(ci => ci.CartId == cartId).Sum(ci => ci.Quantity);
         }
-
+        public CartItem GetCartItemById(int ID)
+        {
+            return _db.CartItems.FirstOrDefault(ci => ci.CartItemId == ID);
+        }
     }
 }

@@ -34,11 +34,15 @@ namespace MVCElectronicStore
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-
+            services.AddMvc()
+            .AddViewOptions(options =>
+            {
+                options.HtmlHelperOptions.ClientValidationEnabled = true;
+            });
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddDbContext<electronic_storeContext>(options =>
-           options.UseSqlServer(Configuration.GetConnectionString("ElectronicStoreDBContext")));
+            options.UseSqlServer(Configuration.GetConnectionString("ElectronicStoreDBContext")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<DBHelper>();
             services.AddHttpContextAccessor();
@@ -69,12 +73,13 @@ namespace MVCElectronicStore
 
             app.UseEndpoints(endpoints =>
             {
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
-                    name: "areas",
-                    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+                 name: "areas",
+                 pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "search",
                     pattern: "Product/Search",
@@ -82,8 +87,22 @@ namespace MVCElectronicStore
                 endpoints.MapControllerRoute(
                     name: "AddToCart",
                     pattern: "cart/add",
-                    defaults: new { controller = "Cart", action = "AddToCart" }
-                );
+                    defaults: new { controller = "Cart", action = "AddToCart" });
+                endpoints.MapControllerRoute(
+                    name: "myOrders",
+                    pattern: "cart/my-orders",
+                    defaults: new { controller = "Cart", action = "MyOrders" });
+
+                endpoints.MapControllerRoute(
+                    name: "cancelOrder",
+                    pattern: "cart/cancel-order/{orderId}",
+                    defaults: new { controller = "Cart", action = "CancelOrder" });
+
+                endpoints.MapControllerRoute(
+                    name: "confirmCancelOrder",
+                    pattern: "cart/confirm-cancel-order/{orderId}",
+                    defaults: new { controller = "Cart", action = "ConfirmCancelOrder" });
+
 
             });
         }

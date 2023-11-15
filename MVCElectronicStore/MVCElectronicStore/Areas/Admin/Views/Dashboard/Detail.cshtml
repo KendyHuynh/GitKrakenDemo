@@ -1,4 +1,65 @@
-﻿@{
+﻿@model ProductViewModel
+@{
     ViewData["Title"] = "Admin Products";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ProductViewModel product = ViewData["Product"] as ProductViewModel;
 }
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Product Details</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard v1</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="container-fluid">
+        <div class="row mt-3">
+            <div class="col-12">
+                @if (product != null)
+                {
+                    <div class="card" style="max-width: 500px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                        <div class="card-body" style="padding: 20px;">
+                            <h5 class="card-title" style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">Product Name: @product.ProductName</h5>
+                            @if (!string.IsNullOrEmpty(@product.Image))
+                            {
+                                if (@product.Image.StartsWith("img"))
+                                {
+                                    <!-- Local image -->
+                                    <img src="~/@Url.Content(@product.Image)" alt="@Url.Content(@product.Image)" style="display: block; margin: 0 auto; max-width: 200px; height: auto; border-radius: 5px;">
+                                }
+                                else
+                                {
+                                    <!-- External image -->
+                                    <img src="@product.Image" alt="Product Image" style="display: block; margin: 0 auto; max-width: 200px; height: auto; border-radius: 5px;">
+                                }
+                            }
+                            <p class="card-text" style="margin-bottom: 10px;">Configuration Information: @product.Description</p>
+                            <p class="card-text" style="margin-bottom: 10px;">Product Type: @product.CategoryName</p>
+                            <p class="card-text" style="margin-bottom: 10px;">Provider: @product.BrandName</p>
+                            <p class="card-text" style="margin-bottom: 10px;">Price: @product.Price</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p>Product not found.</p>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -1,0 +1,44 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Chi tiết đơn hàng</h1>
+
+@if (Model != null)
+{
+    <p>Mã đơn hàng: @Model.OrderId</p>
+    <p>Ngày đặt hàng: @Model.OrderDate</p>
+    <p>Tổng tiền: @Model.TotalPrice VND</p>
+    <p>Trạng thái: @Model.Status</p>
+
+    <h2>Các mặt hàng trong đơn hàng</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Tổng cộng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orderItem in Model.OrderItems)
+            {
+                <tr>
+                    <td>@orderItem.Product.ProductName</td>
+                    <td>@orderItem.Quantity</td>
+                    <td>@orderItem.Product.Price VND</td>
+                    <td>@orderItem.Subtotal VND</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Không tìm thấy đơn hàng.</p>
+}

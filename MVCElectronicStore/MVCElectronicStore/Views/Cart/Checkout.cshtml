@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var lstCartItem = ViewData["lstCartItem"] as IEnumerable<CartItem>;
+}
+
+<div class="text-center">
+    <h1>THANH TOÁN</h1>
+</div>
+@{ decimal total = 0; }
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- Phần hiển thị thông tin đơn hàng -->
+        <h3>Thông tin đơn hàng</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Tổng cộng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (lstCartItem != null)
+                {
+                    @for (var i = 0; i < lstCartItem.Count(); i++)
+                    {
+                        var cartItem = lstCartItem.ElementAtOrDefault(i);
+                        if (cartItem != null)
+                        {
+                            <tr>
+                                <td scope="row">@cartItem.Product.ProductName</td>
+                                <td scope="row">
+                                    <span class="mx-2">@cartItem.Quantity</span>
+                                </td>
+                                <td scope="row"><img src="~/images/@cartItem.Product.Image" alt="@cartItem.Product.Image" width="100"></td>
+                                <td scope="row">@cartItem.Product.Price VND</td>
+                                @{
+                                    cartItem.Subtotal = cartItem.Quantity * cartItem.Product.Price;
+                                    total = total + cartItem.Subtotal;
+                                }
+                                <td scope="row">@cartItem.Subtotal VND</td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label for="total">Tổng tiền:</label>
+            <span id="displayTotal">@total VND</span>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <!-- Phần thông tin thanh toán -->
+        <h3>Thông tin thanh toán</h3>
+        <form asp-controller="Cart" asp-action="PlaceOrder" method="post">
+            <input type="hidden" name="total" id="total" value="@total" />
+            <div class="form-group">
+                <label for="fullName">Họ và tên:</label>
+                <input type="text" name="fullName" class="form-control" required value="@((string)ViewData["UserFullName"] ?? "")" />
+            </div>
+
+            <div class="form-group">
+                <label for="address">Địa chỉ giao hàng:</label>
+                <input type="text" name="address" class="form-control" required value="@((string)ViewData["UserAddress"] ?? "")" />
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber">Số điện thoại:</label>
+                <input type="text" name="phoneNumber" class="form-control" required value="@((string)ViewData["UserPhoneNumber"] ?? "")" />
+            </div>
+
+            <div class="form-group">
+                <label for="paymentMethod">Phương thức thanh toán:</label>
+                <select name="paymentMethod" class="form-control">
+                    <option value="cash-on-delivery">Thanh toán khi nhận hàng</option>
+                    <option value="momo-payment">Thanh toán qua Momo</option>
+                    <option value="zalo-payment">Thanh toán qua ZaloPay</option>
+                    <option value="bankcard-payment">Thanh toán qua thẻ ngân hàng</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Xác nhận đặt hàng</button>
+        </form>
+    </div>
+</div>
+<style>
+    /* Đổi màu sắc tiêu đề và làm đậm */
+    .form-group label {
+        color: #007bff; /* Màu xanh dương */
+        font-weight: bold;
+    }
+
+    /* Đổi màu sắc khi input được focus */
+    .form-group input:focus {
+        border-color: #007bff; /* Màu xanh dương */
+    }
+
+    /* Đổi màu sắc tổng tiền và làm đậm */
+    .total-amount {
+        color: #dc3545; /* Màu đỏ */
+        font-weight: bold;
+        font-size: 1.2em; /* Kích thước chữ */
+    }
+
+    /* Tăng cường padding cho input */
+    .form-group input {
+        padding: 8px;
+    }
+
+        /* Nền ô input khi focus */
+        .form-group input:focus {
+            background-color: #f8f9fa; /* Màu xám nhạt */
+        }
+
+    /* Định dạng nút xác nhận */
+    .btn-primary {
+        background-color: #007bff; /* Màu nền xanh dương */
+        color: #fff; /* Màu chữ trắng */
+        border: 1px solid #007bff; /* Viền màu xanh dương */
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Màu nền xanh dương khi hover */
+            border: 1px solid #0056b3; /* Viền màu xanh dương khi hover */
+        }
+</style>
+    

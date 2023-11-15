@@ -1,9 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Admin Products";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
-    var lstProduct = ViewData["lstProduct"] as IEnumerable<Product>;
-    var lstBrand = ViewData["lstBrand"] as IEnumerable<Brand>;
-    var lstCategory = ViewData["lstCategory"] as IEnumerable<Category>;
+    var lstOrder = ViewData["lstOrder"] as IEnumerable<Order>;
+    var lstOrderItem = ViewData["lstOrderItem"] as IEnumerable<OrderItem>;
 }
 
 <!-- Content Wrapper. Contains page content -->
@@ -49,35 +48,35 @@
                             <th scope="col">Option</th>
                         </tr>
                     </thead>
-                <tbody>
-                    @if (lstProduct != null)
-                    {
-                        @for (var i = 0; i < lstProduct.Count(); i++)
+                    <tbody>
+                        @if (lstProduct != null)
                         {
-                            var product = lstProduct.ElementAtOrDefault(i);
+                            @for (var i = 0; i < lstProduct.Count(); i++)
+                            {
+                                var product = lstProduct.ElementAtOrDefault(i);
                                 <tr>
                                     <td scope="row" width="100">@product.ProductId</td>
-                                    <td scope="row"  width="150" >@product.ProductName</td>
+                                    <td scope="row" width="150">@product.ProductName</td>
                                     <td scope="row"><img src="~/images/@product.Image" alt="@product.Image" width="100"></td>
-                                    <td scope="row"  width="170" >@product.Description</td>
-                                    <td scope="row"  width="150" >@product.Category.CategoryName</td>
+                                    <td scope="row" width="170">@product.Description</td>
+                                    <td scope="row" width="150">@product.Category.CategoryName</td>
                                     <td scope="row" width="100">@product.Brand.BrandName</td>
-                                    <td scope="row" width="150" >@product.Price</td>
+                                    <td scope="row" width="150">@product.Price</td>
                                     <td>
                                         <a class="btn btn-info" asp-area="Admin" asp-controller="Dashboard" asp-action="Detail" asp-route-ID="@product.ProductId">View Detail</a>
                                         <a class="btn btn-warning" asp-area="Admin" asp-controller="Dashboard" asp-action="Edit" asp-route-ID="@product.ProductId">Edit</a>
                                         <a class="btn btn-danger" asp-area="Admin" asp-controller="Dashboard" asp-action="Delete" asp-route-ID="@product.ProductId">Delete</a>
                                     </td>
                                 </tr>
-                        } 
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="8">No products available.</td>
-                        </tr>
-                    }
-                </tbody>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8">No products available.</td>
+                            </tr>
+                        }
+                    </tbody>
 
                 </table>
             </div>

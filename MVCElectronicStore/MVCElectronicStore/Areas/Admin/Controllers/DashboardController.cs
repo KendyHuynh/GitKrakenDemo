@@ -30,7 +30,32 @@ namespace MVCElectronicStore.Areas.Admin.Controllers
             return View();
         }
         public IActionResult Detail(int ID)
-        {    
+        {
+            var product = dbHelper.GetProductById(ID);
+            var categories = dbHelper.GetCategoryById(product.CategoryId);
+            var brands = dbHelper.GetBrandById(product.BrandId);
+
+            if (product != null && categories != null && brands != null)
+            {
+                ProductViewModel productVM = new ProductViewModel()
+                {
+                    ProductId = product.ProductId,
+                    ProductName = product.ProductName,
+                    Image = product.Image,
+                    Description = product.Description,
+                    CategoryName = categories.CategoryName,
+                    BrandName = brands.BrandName,
+                    Price = product.Price,
+                    Color = product.Color
+                };
+
+                ViewData["Product"] = productVM;
+            }
+            else
+            {
+                ViewData["ProductNotFound"] = true;
+            }
+
             return View();
         }
 
